@@ -1,0 +1,164 @@
+<!-- templates/signin_signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In / Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        button {
+            background-color: #4285f4;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #3171e0;
+        }
+
+        .separator {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #757575;
+        }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ccc;
+        }
+        .attribute {
+            color: white;
+            display: none;
+            transition: opacity 0.5s;
+        }
+    </style>
+    <script>
+       
+        function fun(s) {
+            
+            var navbar = document.getElementsByClassName("container");
+            var temp1 = document.getElementById("c1");
+            if(s==1){
+                var temp = document.getElementById("I1");
+                temp1.innerHTML="<h3>Login</h3>"+temp.innerHTML;
+            }
+            else {
+                var temp =document.getElementById("I2");
+                temp1.innerHTML="<h3>Signin</h3>"+ temp.innerHTML;
+            }   
+        }
+        function fun1(s) {
+            
+            var navbar = document.getElementsByClassName("container");
+            var temp1 = document.getElementById("c1");
+            if(s==1){
+                var temp = document.getElementById("I1");
+                temp1.innerHTML= "<h3>Hello Doctor,</h3>"+temp.innerHTML;
+            }
+            else {
+                var temp =document.getElementById("c2");
+                temp1.innerHTML=temp.innerHTML;
+            }   
+        }
+        function validateform(){ 
+            var password=document.getElementById("password").value;
+            var confirm_password=document.getElementById("confirm_password").value;
+            if(password==confirm_password)
+                return true;  
+            else 
+                alert("Password doesn't match");
+                return false;
+        }  
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="main" id="c1">
+            <h2>Welcome</h2>
+            <h3>Please Select</h3>
+            <button onclick="fun1(1)">Doctor</button>
+            <div class="separator">or</div>
+            <button onclick="fun1(2)">Patient</button>
+        </div>
+        
+    </div>
+    <div class="attribute" id="c2">
+        <h2>Welcome</h2>
+        <button onclick="fun(1)">login</button>
+        <div class="separator">or</div>
+        <button onclick="fun(2)">Signup</button>
+    </div>
+        <div class="attribute" id="I1">
+            <form action="signin" method="post">
+                {% csrf_token %}
+                <input type="text" name="email" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>        
+        <div class="attribute" id="I2">
+            <form action="signup" method="post" onsubmit="return validateform()" >
+                {% csrf_token %}
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <input type="file" name="profile_picture" accept="image/*" required>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm Password" required>
+                <input type="text" name="address_line1" placeholder="Address Line 1" required>
+                <input type="text" name="city" placeholder="City" required>
+                <input type="text" name="state" placeholder="State" required>
+                <input type="text" name="pincode" placeholder="Pincode" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div> 
+</body>
+</html>
