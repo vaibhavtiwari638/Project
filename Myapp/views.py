@@ -3,67 +3,6 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import datetime
 
-
-import pickle
-import string
-from nltk.corpus import stopwords
-import nltk
-nltk.download('punkt')  
-nltk.download('stopwords')
-from nltk.stem.porter import PorterStemmer
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-ps = PorterStemmer()
-# tfidf = pickle.load(open('vectorizer.pkl','rb'))
-# model = pickle.load(open('model.pkl','rb'))
-try:
-    with open('vectorizer.pkl', 'rb') as file:
-        tfidf = pickle.load(file)
-except FileNotFoundError:
-    # Handle the case where the file is not found
-        tfidf = None 
-try:
-    with open('model.pkl', 'rb') as file:
-        model = pickle.load(file)
-except FileNotFoundError:
-    # Handle the case where the file is not found
-        model = None 
-
-def transform_text(text):
-    text = text.lower()
-    text = nltk.word_tokenize(text)
-
-    y = []
-    for i in text:
-        if i.isalnum():
-            y.append(i)
-
-    text = y[:]
-    y.clear()
-
-    for i in text:
-        if i not in stopwords.words('english') and i not in string.punctuation:
-            y.append(i)
-
-    text = y[:]
-    y.clear()
-
-    for i in text:
-        y.append(ps.stem(i))
-
-    return " ".join(y)
-
-
-
-# 1. preprocess
-
-# 2. vectorize
-
-# 3. predict
-
-# 4. Display
-  
-
 def homepage(request):
     return render( request ,'homepage.html')
 
